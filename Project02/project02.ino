@@ -69,5 +69,55 @@ void loop()
         }
     }
 
-    
+    // Si le bouton est relâché, réinitialiser le compteur
+    if (!boutonAppuye)
+    {
+        debutAppui = 0;
+    }
+
+    // Gestion des messages série
+    if (Serial.available() > 0)
+    {
+        String message = Serial.readStringUntil('\n');
+        message.trim();
+        Serial.println("Message recu : " + message);
+
+        if (!sosActif)
+        {
+            if (message == "meduse" || message == "tempete" || message == "requin")
+            {
+                digitalWrite(ledRouge, HIGH);
+                digitalWrite(ledOrange, LOW);
+                digitalWrite(ledVert, LOW);
+                dernierEtat = 0;
+            }
+            else if (message == "vague")
+            {
+                digitalWrite(ledRouge, LOW);
+                digitalWrite(ledOrange, HIGH);
+                digitalWrite(ledVert, LOW);
+                dernierEtat = 1;
+            }
+            else if (message == "surveillant" || message == "calme")
+            {
+                digitalWrite(ledRouge, LOW);
+                digitalWrite(ledOrange, LOW);
+                digitalWrite(ledVert, HIGH);
+                dernierEtat = 2;
+            }
+        }
+    }
+
+    // Gestion du clignotement en mode SOS
+    if (sosActif)
+    {
+        if (millis() - dernierClignotement >= 500)
+        {
+            etatClignotement = !etatClignotement;
+            digitalWrite(ledRouge, etatClignotement);
+            digitalWrite(ledOrange, LOW);
+            digitalWrite(ledVert, LOW);
+            dernierClignotement = millis();
+        }
+    }
 }
