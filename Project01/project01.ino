@@ -20,5 +20,20 @@ void loop() {
     Serial.println(mode);
   }
   
-// 2- allumé 
+// 2- allumé
+  if(digitalRead (bouton) == 1 && !boutonActif) {
+    boutonActif = true;
+    delay(100);
+  }
+  if(mode == 0) digitalWrite(led, LOW); 
+  else if(mode == 1) {
+
+    if(millis() - timer >= 1000 ) {
+      int statutLed = digitalRead(led);
+      int newStatutLed = !statutLed;
+      digitalWrite(led, newStatutLed);
+      timer = millis();
+    }
+  }
+  else digitalWrite(led, HIGH); 
 }
