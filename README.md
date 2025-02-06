@@ -22,7 +22,7 @@ Système simple permettant de contrôler une LED avec 3 modes différents via un
 - Mode 3: LED allumée
 
 ## 🏖️ Projet 2: Système d'Alerte
-![Warning System](images/project1.png)
+![Warning System](images/project2.png)
 
 Système d'alerte avec 3 LED de couleur et fonction SOS.
 
